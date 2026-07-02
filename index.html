@@ -57,6 +57,14 @@
             padding: calc(14px + env(safe-area-inset-top)) 16px 16px;
             position: sticky; top: 0; z-index: 20;
         }
+        .brand-strip {
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            margin-bottom: 10px; opacity: .85;
+        }
+        .brand-strip span {
+            font-family: 'Oswald', sans-serif; font-size: 12px; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase;
+        }
         /* Calendar grid */
         .cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; }
         .cal-dh { text-align: center; font-size: 12px; font-weight: 700; color: var(--text-muted); padding: 7px 0; }
@@ -1461,11 +1469,29 @@ function eh(v) { return String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;')
 const $ = id => document.getElementById(id);
 
 // ===== Init =====
+function renderBrandStrip() {
+    const icon = `<svg width="20" height="20" viewBox="0 0 24 24">
+        <path d="M4.5 13 C4.5 6.5 8 3 12 3 C16 3 19.5 6.5 19.5 13 Z" fill="#fff"/>
+        <rect x="2.5" y="12.4" width="19" height="2.3" rx="1.15" fill="#F59E0B"/>
+        <circle cx="12" cy="13" r="6" fill="#fff" stroke="#F59E0B" stroke-width="1.3"/>
+        <line x1="12" y1="13" x2="10.09" y2="14.91" stroke="#1F2937" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="12" y1="13" x2="12" y2="17.5" stroke="#1F2937" stroke-width="1" stroke-linecap="round"/>
+        <circle cx="12" cy="13" r="0.85" fill="#1F2937"/>
+    </svg>`;
+    document.querySelectorAll('.app-header').forEach(h => {
+        const strip = document.createElement('div');
+        strip.className = 'brand-strip';
+        strip.innerHTML = `${icon}<span>ShiftPro Tracker</span>`;
+        h.insertBefore(strip, h.firstChild);
+    });
+}
+
 window.onload = function() {
     const t = new Date();
     curYear = t.getFullYear(); curMonth = t.getMonth()+1; statsYear = curYear;
     loadSettings(); loadReasons(); loadRotConfig(); loadCustomHols(); loadTheme();
     renderPatternSelect();
+    renderBrandStrip();
     $('restore-file').onchange = restoreData;
     renderCal();
 };
