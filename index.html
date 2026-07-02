@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#F97316" />
+    <meta name="theme-color" content="#F472B6" />
     <title>ShiftPro Tracker</title>
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://generativelanguage.googleapis.com; manifest-src 'self'; worker-src 'self';">
     <link rel="manifest" href="manifest.webmanifest">
@@ -21,25 +21,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #F97316;
-            --primary-dark: #EA580C;
-            --primary-light: #FFF7ED;
-            --header-from: #F97316;
-            --header-to:   #EA580C;
+            --primary: #EC4899;
+            --primary-dark: #DB2777;
+            --primary-light: #FDF2F8;
+            --header-from: #F472B6;
+            --header-to:   #EC4899;
             --shift-m: #22C55E;
             --shift-n: #3B82F6;
             --shift-off-bg: #E5E7EB;
             --shift-off-text: #6B7280;
-            --bg: #F3F4F6;
+            --bg: #FFF5F9;
             --surface: #FFFFFF;
-            --text: #111827;
-            --text-muted: #6B7280;
-            --border: #E5E7EB;
-            --cal-weekend: #F8FAFC;
+            --text: #3D0B24;
+            --text-muted: #9D6B85;
+            --border: #FBCFE8;
+            --cal-weekend: #FDF2F8;
             --cal-holiday: #FEF2F2;
             --cal-extra-bg: #EDE9FE;
             --cal-extra-stripe: #7C3AED;
-            --focus-ring:  rgba(249,115,22,.18);
+            --focus-ring:  rgba(236,72,153,.18);
             --nav-h: 60px;
             --brand-h: 34px;
         }
@@ -57,61 +57,6 @@
             padding: calc(14px + env(safe-area-inset-top)) 16px 16px;
             position: sticky; top: 0; z-index: 20;
         }
-        /* ── World Cup theme header decorations ── */
-        body[data-theme="wc-stadium"] .app-header::before {
-            content:''; position:absolute; inset:0; pointer-events:none; z-index:0;
-            background-image:
-                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size:28px 28px;
-        }
-        body[data-theme="wc-stadium"] .app-header { color:#FFD700; }
-        body[data-theme="wc-stadium"] .app-header button { color:#FFD700 !important; }
-        body[data-theme="wc-trophy"] .app-header::after {
-            content:''; position:absolute; bottom:0; left:0; right:0; height:2px; pointer-events:none;
-            background:linear-gradient(90deg, transparent, #C9A84C, #F5D78B, #C9A84C, transparent);
-        }
-        body[data-theme="wc-trophy"] .app-header { color:#F5D78B; }
-        body[data-theme="wc-trophy"] .app-header button { color:#F5D78B !important; }
-        body[data-theme="wc-thai"] .app-header::before {
-            content:''; position:absolute; top:0; left:0; right:0; height:4px; pointer-events:none;
-            background:linear-gradient(90deg, #E63946 33%, #fff 33% 66%, #E63946 66%);
-        }
-        body[data-theme="wc-thai"] .app-header { border-bottom:3px solid #E63946; }
-        body[data-theme="wc-tournament"] .app-header { border-bottom:2px solid #00B894; }
-        /* ── World Cup theme calendar cell enhancements ── */
-        body[data-theme^="wc-"] .cal-day.shift-m {
-            background: rgba(34,197,94,0.18) !important;
-            border: 1px solid rgba(34,197,94,0.45);
-        }
-        body[data-theme^="wc-"] .cal-day.shift-n {
-            background: rgba(59,130,246,0.15) !important;
-            border: 1px solid rgba(59,130,246,0.35);
-        }
-        body[data-theme^="wc-"] .cal-day.has-ot {
-            border-color: rgba(255,215,0,0.75) !important;
-            box-shadow: 0 0 7px rgba(255,215,0,0.25);
-        }
-        body[data-theme^="wc-"] .ot-dot {
-            background: #FFD700;
-            box-shadow: 0 0 4px rgba(255,215,0,0.8);
-        }
-        body[data-theme^="wc-"] .s-badge { font-size: 9px; letter-spacing: 0; }
-        /* ── World Cup theme sum bar ── */
-        body[data-theme="wc-thai"] .sum-bar {
-            background: #E63946;
-            border-top: 1px solid rgba(255,255,255,0.2);
-        }
-        body[data-theme="wc-thai"] .sum-label { color: rgba(255,255,255,0.75); }
-        body[data-theme="wc-thai"] .sum-val { color: #fff !important; }
-        body[data-theme="wc-stadium"] .sum-bar,
-        body[data-theme="wc-trophy"] .sum-bar,
-        body[data-theme="wc-tournament"] .sum-bar {
-            background: rgba(0,0,0,0.45);
-            border-top: 1px solid rgba(255,255,255,0.08);
-        }
-        /* ── WC branding block in header ── */
-        #wc-branding { display:none; text-align:center; padding-bottom:10px; }
         /* Calendar grid */
         .cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; }
         .cal-dh { text-align: center; font-size: 12px; font-weight: 700; color: var(--text-muted); padding: 7px 0; }
@@ -387,7 +332,6 @@
 <!-- ======== TAB: ปฏิทิน ======== -->
 <div id="tab-calendar" class="tab active">
     <div class="app-header">
-        <div id="wc-branding"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
             <button onclick="changeMonth(-1)" style="background:none;border:none;color:#fff;cursor:pointer;padding:4px;opacity:.9" aria-label="เดือนก่อน">
                 <svg width="22" height="22" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>
@@ -1271,52 +1215,31 @@ const MAX_OT = 48;
 const GEMINI_MODEL = 'gemini-2.5-flash';
 
 const THEMES = [
-    { id:'orange', name:'Orange\nFlame',  emoji:'🔥',
-      primary:'#F97316', dark:'#EA580C', light:'#FFF7ED', focusRing:'rgba(249,115,22,.18)',
-      hFrom:'#F97316', hTo:'#EA580C',
-      bg:'#F3F4F6', surface:'#FFFFFF', text:'#111827', muted:'#6B7280', border:'#E5E7EB',
-      calWeekend:'#F8FAFC', calHoliday:'#FEF2F2', calCustomHol:'#F5F3FF', calExtraBg:'#EDE9FE', calExtraStripe:'#7C3AED' },
-    { id:'sky', name:'Sky\nBlue',         emoji:'🌤️',
-      primary:'#0EA5E9', dark:'#0284C7', light:'#E0F2FE', focusRing:'rgba(14,165,233,.18)',
-      hFrom:'#0369A1', hTo:'#0EA5E9',
-      bg:'#F0F9FF', surface:'#FFFFFF', text:'#0C1A2E', muted:'#4B6A8A', border:'#BAE6FD',
-      calWeekend:'#F0F9FF', calHoliday:'#FEF2F2', calCustomHol:'#F5F3FF', calExtraBg:'#EDE9FE', calExtraStripe:'#7C3AED' },
-    { id:'ocean', name:'Ocean\nDeep',     emoji:'🌊',
-      primary:'#2563EB', dark:'#1D4ED8', light:'#DBEAFE', focusRing:'rgba(37,99,235,.18)',
-      hFrom:'#1E3A5F', hTo:'#1D4ED8',
-      bg:'#F8FAFC', surface:'#FFFFFF', text:'#0F172A', muted:'#4A6180', border:'#BFDBFE',
-      calWeekend:'#F1F5F9', calHoliday:'#FEF2F2', calCustomHol:'#F5F3FF', calExtraBg:'#EDE9FE', calExtraStripe:'#7C3AED' },
-    { id:'frost', name:'Arctic\nFrost',   emoji:'❄️',
-      primary:'#0891B2', dark:'#0E7490', light:'#CFFAFE', focusRing:'rgba(8,145,178,.18)',
-      hFrom:'#164E63', hTo:'#06B6D4',
-      bg:'#F0FDFE', surface:'#FFFFFF', text:'#0C2A2F', muted:'#4A7580', border:'#A5F3FC',
-      calWeekend:'#E0FDFF', calHoliday:'#FEF2F2', calCustomHol:'#F5F3FF', calExtraBg:'#EDE9FE', calExtraStripe:'#7C3AED' },
-    { id:'midnight', name:'Midnight\nNavy', emoji:'🌙',
-      primary:'#60A5FA', dark:'#3B82F6', light:'#1E3A8A', focusRing:'rgba(96,165,250,.2)',
-      hFrom:'#1E3A8A', hTo:'#3B82F6',
-      bg:'#0F172A', surface:'#1E293B', text:'#F1F5F9', muted:'#94A3B8', border:'#334155',
-      calWeekend:'#172032', calHoliday:'#2D1515', calCustomHol:'#1E1A35', calExtraBg:'#2D1B69', calExtraStripe:'#A78BFA' },
-    // ── World Cup 2026 Edition ──
-    { id:'wc-stadium', name:'Stadium\nGreen', emoji:'⚽', wc:true,
-      primary:'#FFD700', dark:'#E6C200', light:'#3a3000', focusRing:'rgba(255,215,0,.22)',
-      hFrom:'#0d2b1a', hTo:'#1a5c35',
-      bg:'#0d2b1a', surface:'#122a19', text:'#E8F5E9', muted:'#7AAB8A', border:'#1e3d28',
-      calWeekend:'#0f3320', calHoliday:'#3a1500', calCustomHol:'#1a1035', calExtraBg:'#2D1B69', calExtraStripe:'#A78BFA' },
-    { id:'wc-trophy', name:'Golden\nTrophy', emoji:'🏆', wc:true,
-      primary:'#C9A84C', dark:'#B8973B', light:'#1a1500', focusRing:'rgba(201,168,76,.25)',
-      hFrom:'#0D1B3E', hTo:'#253a7a',
-      bg:'#0D1B3E', surface:'#162454', text:'#E8EDF8', muted:'#7A8AAA', border:'#1e2a48',
-      calWeekend:'#111f4a', calHoliday:'#2d1015', calCustomHol:'#13104a', calExtraBg:'#2D1B69', calExtraStripe:'#A78BFA' },
-    { id:'wc-thai', name:'Thai\nTeam', emoji:'🇹🇭', wc:true,
-      primary:'#E63946', dark:'#C22030', light:'#3d0a10', focusRing:'rgba(230,57,70,.25)',
-      hFrom:'#C22030', hTo:'#1D3557',
-      bg:'#12204E', surface:'#1D3366', text:'#FFFFFF', muted:'#8899BB', border:'#1e2d5a',
-      calWeekend:'#162a5f', calHoliday:'#3d0a10', calCustomHol:'#14103d', calExtraBg:'#2D1B69', calExtraStripe:'#A78BFA' },
-    { id:'wc-tournament', name:'Tourna\nment', emoji:'🌍', wc:true,
-      primary:'#00B894', dark:'#00A381', light:'#001a15', focusRing:'rgba(0,184,148,.2)',
-      hFrom:'#0a0a0a', hTo:'#00523a',
-      bg:'#0a0a0a', surface:'#111111', text:'#FFFFFF', muted:'#888888', border:'#222222',
-      calWeekend:'#0d0d0d', calHoliday:'#1a0000', calCustomHol:'#150a2a', calExtraBg:'#2D1B69', calExtraStripe:'#C4B5FD' },
+    { id:'sakura', name:'Sakura\nPink', emoji:'🌸',
+      primary:'#EC4899', dark:'#DB2777', light:'#FDF2F8', focusRing:'rgba(236,72,153,.18)',
+      hFrom:'#F472B6', hTo:'#EC4899',
+      bg:'#FFF5F9', surface:'#FFFFFF', text:'#3D0B24', muted:'#9D6B85', border:'#FBCFE8',
+      calWeekend:'#FDF2F8', calHoliday:'#FEF2F2', calCustomHol:'#F5F3FF', calExtraBg:'#EDE9FE', calExtraStripe:'#7C3AED' },
+    { id:'jade', name:'Jade\nForest', emoji:'🍃',
+      primary:'#059669', dark:'#047857', light:'#ECFDF5', focusRing:'rgba(5,150,105,.18)',
+      hFrom:'#10B981', hTo:'#047857',
+      bg:'#F0FDF6', surface:'#FFFFFF', text:'#062B1D', muted:'#4B8069', border:'#A7F3D0',
+      calWeekend:'#ECFDF5', calHoliday:'#FEF2F2', calCustomHol:'#F5F3FF', calExtraBg:'#EDE9FE', calExtraStripe:'#7C3AED' },
+    { id:'amber', name:'Amber\nSunrise', emoji:'🌅',
+      primary:'#F59E0B', dark:'#D97706', light:'#FFFBEB', focusRing:'rgba(245,158,11,.2)',
+      hFrom:'#FBBF24', hTo:'#F59E0B',
+      bg:'#FFFBEA', surface:'#FFFFFF', text:'#3D2B06', muted:'#A5824A', border:'#FDE68A',
+      calWeekend:'#FFFBEB', calHoliday:'#FEF2F2', calCustomHol:'#F5F3FF', calExtraBg:'#EDE9FE', calExtraStripe:'#7C3AED' },
+    { id:'royal', name:'Royal\nPurple', emoji:'👑',
+      primary:'#A78BFA', dark:'#8B5CF6', light:'#2E1065', focusRing:'rgba(167,139,250,.2)',
+      hFrom:'#4C1D95', hTo:'#7C3AED',
+      bg:'#1A0B2E', surface:'#2A1650', text:'#F3E8FF', muted:'#A78BCB', border:'#4C2E7A',
+      calWeekend:'#241142', calHoliday:'#3D1520', calCustomHol:'#3D1030', calExtraBg:'#3D2B06', calExtraStripe:'#FBBF24' },
+    { id:'graphite', name:'Graphite\nMono', emoji:'⚫',
+      primary:'#FB7185', dark:'#F43F5E', light:'#1F2937', focusRing:'rgba(251,113,133,.2)',
+      hFrom:'#18181B', hTo:'#3F3F46',
+      bg:'#111113', surface:'#1C1C1F', text:'#F4F4F5', muted:'#9CA3AF', border:'#2E2E33',
+      calWeekend:'#17171A', calHoliday:'#2D1518', calCustomHol:'#1E1A22', calExtraBg:'#2D1B69', calExtraStripe:'#A78BFA' },
 ];
 
 function applyTheme(id) {
@@ -1344,47 +1267,13 @@ function applyTheme(id) {
     document.body.dataset.theme = id;
     SS.set('theme', id);
     if ($('theme-picker')) renderThemePicker();
-    updateWCBranding(id);
     if ($('cal-body')) renderCal();
 }
 
-function loadTheme() { applyTheme(SS.get('theme') || 'orange'); }
-
-function updateWCBranding(id) {
-    const el = $('wc-branding');
-    if (!el) return;
-    const brandingMap = {
-        'wc-stadium': `
-            <div style="font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;letter-spacing:3px;color:#FFD700">⚽ SHIFTPRO</div>
-            <div style="font-size:10px;letter-spacing:2px;color:rgba(255,215,0,0.55)">TRACKER · กะทำงาน</div>`,
-        'wc-trophy': `
-            <div style="display:flex;align-items:center;justify-content:center;gap:8px">
-                <span style="font-size:22px;filter:drop-shadow(0 0 7px rgba(201,168,76,0.8))">🏆</span>
-                <span style="font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;letter-spacing:2px;color:#F5D78B">ShiftPro</span>
-            </div>
-            <div style="font-size:10px;letter-spacing:2px;color:rgba(201,168,76,0.5)">TRACKER · กะทำงาน</div>`,
-        'wc-thai': `
-            <div style="display:flex;align-items:center;justify-content:center;gap:6px">
-                <span style="font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;letter-spacing:2px;color:#fff">ShiftPro Tracker</span>
-                <span style="font-size:20px">🐘</span>
-            </div>
-            <div style="font-size:10px;color:rgba(255,255,255,0.5)">ติดตามกะทำงาน</div>`,
-        'wc-tournament': `
-            <div style="font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;letter-spacing:3px;color:#fff">SHIFT<span style="color:#00B894">PRO</span></div>
-            <div style="font-size:10px;letter-spacing:2px;color:#555">WORLD CUP EDITION</div>`
-    };
-    const html = brandingMap[id];
-    if (html) {
-        el.innerHTML = html;
-        el.style.display = 'block';
-    } else {
-        el.style.display = 'none';
-        el.innerHTML = '';
-    }
-}
+function loadTheme() { applyTheme(SS.get('theme') || 'sakura'); }
 
 function renderThemePicker() {
-    const cur = SS.get('theme') || 'orange';
+    const cur = SS.get('theme') || 'sakura';
     const mkBtn = t => {
         const sel = t.id === cur;
         return `<button onclick="applyTheme('${t.id}')" style="
@@ -1397,17 +1286,13 @@ function renderThemePicker() {
                 box-shadow:0 3px 8px rgba(0,0,0,.25);
                 display:flex;align-items:center;justify-content:center;
                 font-size:${sel?'16':'20'}px;font-weight:800;color:#fff">
-                ${sel ? '✓' : (t.wc ? t.emoji : '')}
+                ${sel ? '✓' : t.emoji}
             </div>
             <span style="font-size:9px;font-weight:700;color:var(--text-muted);text-align:center;line-height:1.3;white-space:pre-line">${t.name}</span>
         </button>`;
     };
-    const std = THEMES.filter(t => !t.wc);
-    const wc  = THEMES.filter(t => t.wc);
     $('theme-picker').innerHTML =
-        `<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px">${std.map(mkBtn).join('')}</div>` +
-        `<div style="font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;padding:10px 2px 6px;border-top:1px solid var(--border);margin-top:10px">⚽ World Cup 2026 Edition</div>` +
-        `<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">${wc.map(mkBtn).join('')}</div>`;
+        `<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px">${THEMES.map(mkBtn).join('')}</div>`;
 }
 const TH_MONTHS = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
 const TH_MONTHS_S = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
@@ -1679,10 +1564,9 @@ function renderCal() {
         if (shift==='M') cls+=' shift-m';
         else if (shift==='N') cls+=' shift-n';
         if (hasOT) cls+=' has-ot extra-work';
-        const isWCTheme = (document.body.dataset.theme||'').startsWith('wc-');
         let badge = '';
-        if (shift==='M') badge = `<span class="s-badge s-m">${isWCTheme?'🌞 M':'M'}</span>`;
-        else if (shift==='N') badge = `<span class="s-badge s-n">${isWCTheme?'🌙 N':'N'}</span>`;
+        if (shift==='M') badge = `<span class="s-badge s-m">M</span>`;
+        else if (shift==='N') badge = `<span class="s-badge s-n">N</span>`;
         else if (shift==='D') badge = '<span class="s-badge s-d">D</span>';
         else badge = '<span class="s-badge s-off">OFF</span>';
         const holName = getHolName(dk, curYear) || (isCustomHol ? customHolMap[fullDateKey] : '');
