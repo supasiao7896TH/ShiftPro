@@ -39,7 +39,7 @@ mockup-highlight-themes.html ไฟล์ตัวอย่าง/ทดลอ�
 
 ## PWA / Service Worker
 - `sw.js` cache แบบ stale-while-revalidate, แคชไฟล์หลักและ CDN assets ไว้ตอน `install`
-- เปลี่ยนค่า `CACHE` (เวอร์ชัน, ปัจจุบัน `shiftpro-v11-39`) ทุกครั้งที่ปล่อยเวอร์ชันใหม่ เพื่อล้าง cache เก่าของผู้ใช้ — **ถ้าแก้ asset แล้วลืม bump เวอร์ชันนี้ ผู้ใช้ที่ติดตั้งเป็น PWA แล้วจะไม่เห็นการเปลี่ยนแปลง**
+- เปลี่ยนค่า `CACHE` (เวอร์ชัน, ปัจจุบัน `shiftpro-v11-41`) ทุกครั้งที่ปล่อยเวอร์ชันใหม่ เพื่อล้าง cache เก่าของผู้ใช้ — **ถ้าแก้ asset แล้วลืม bump เวอร์ชันนี้ ผู้ใช้ที่ติดตั้งเป็น PWA แล้วจะไม่เห็นการเปลี่ยนแปลง**
 
 ## Deploy
 - Static hosting ล้วน ๆ (เช่น GitHub Pages: Settings → Pages → branch `main` / root)
