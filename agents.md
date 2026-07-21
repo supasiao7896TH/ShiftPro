@@ -17,11 +17,9 @@
 
 ## Service Worker / PWA caching
 - ถ้าแก้ไข `index.html`, `manifest.webmanifest`, หรือไฟล์ใน `icons/` — ต้อง **bump เลขเวอร์ชันใน `CACHE` constant ของ `sw.js`** (บรรทัด `const CACHE = 'shiftpro-vXX-YY'`) ไม่งั้นผู้ใช้ที่ติดตั้งเป็น PWA แล้วจะไม่เห็นการเปลี่ยนแปลง เพราะ service worker เสิร์ฟจาก cache เดิม
-- อย่าแก้ logic การแคช Gemini API call (ต้อง bypass cache เสมอ — ดู `sw.js` บรรทัดที่ check `generativelanguage.googleapis.com`)
 
 ## ข้อมูลผู้ใช้และความปลอดภัย
 - ข้อมูลทั้งหมดอยู่ใน `localStorage` ฝั่ง client เท่านั้น ไม่มี server เก็บข้อมูล
-- Gemini API key เก็บเป็น plain text ใน `localStorage` (ความตั้งใจของ design — BYOK, single-user, local-only) — **อย่า**เปลี่ยนให้ส่ง API key ไปที่ server ใด ๆ หรือ hardcode API key ของจริงลงในโค้ด
 - ห้าม commit API key, credential หรือ secret ใด ๆ ลงในไฟล์ของรีโป
 
 ## ภาษาและสไตล์

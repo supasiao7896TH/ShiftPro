@@ -1,6 +1,6 @@
 // ShiftPro Tracker — Service Worker (offline support)
 // bump CACHE เมื่อปล่อยเวอร์ชันใหม่ เพื่อล้าง cache เก่า
-const CACHE = 'shiftpro-v11-38';
+const CACHE = 'shiftpro-v11-39';
 
 const ASSETS = [
   './',
@@ -46,10 +46,6 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
-
-  const url = new URL(req.url);
-  // ไม่แคชการเรียก Gemini API (ต้องสดเสมอ)
-  if (url.hostname.includes('generativelanguage.googleapis.com')) return;
 
   event.respondWith((async () => {
     const cached = await caches.match(req);
