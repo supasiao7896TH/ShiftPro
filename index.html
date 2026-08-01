@@ -96,6 +96,8 @@
             display: flex; align-items: center; justify-content: center;
         }
         .d-num { font-size: 14px; font-weight: 700; line-height: 26px; width: 26px; text-align: center; }
+        .d-num-row { display: flex; align-items: center; justify-content: center; gap: 1px; }
+        .wp-icon { color: #B8860B; flex-shrink: 0; }
         .s-badge {
             font-size: 11px; font-weight: 700;
             padding: 3px 4px; border-radius: 5px;
@@ -1467,6 +1469,145 @@ function switchTab(tab) {
     if (tab==='future') { loadFutureData(); renderFutureTab(); }
 }
 
+// ===== วันพระ (Wan Phra) — ปฏิทินจันทรคติไทย (สุริยยาตร์/หรคุณ) =====
+// พอร์ตจาก pythaidate (https://github.com/hmmbug/pythaidate) อ้างอิงงานวิจัย J.C. Eade (2018)
+// และ Gislén & Eade (2019) — ตรวจสอบผลลัพธ์แล้วกับวันพระจริงปี 2569 (49 วัน ปีอธิกมาส)
+// และมกราคม 2568 ตรงทุกวัน (ดูรายละเอียดการตรวจสอบใน commit message)
+const WP_DAYS_IN_800_YEARS = 292207, WP_TIME_UNITS = 800, WP_EPOCH_OFFSET = 373;
+const WP_UCCAPON_CONST = 2611, WP_APOGEE_ROT = 3232, WP_CS_JD_OFFSET = 1954167;
+
+function _wpToJulianDay(y, m, d) {
+    let yearp, monthp;
+    if (m === 1 || m === 2) { yearp = y - 1; monthp = m + 12; } else { yearp = y; monthp = m; }
+    let B;
+    if (y < 1582 || (y===1582 && m<10) || (y===1582 && m===10 && d<15)) B = 0;
+    else { const A = Math.floor(yearp/100); B = 2 - A + Math.floor(A/4); }
+    const C = yearp < 0 ? Math.floor(365.25*yearp - 0.75) : Math.floor(365.25*yearp);
+    const D = Math.floor(30.6001*(monthp+1));
+    return Math.floor(B + C + D + d + 1720994.5 + 0.5);
+}
+
+function _wpLSYear(year) {
+    const y = {};
+    y.horakhun = Math.floor((year*WP_DAYS_IN_800_YEARS + WP_EPOCH_OFFSET) / WP_TIME_UNITS) + 1;
+    y.kammacapon = WP_TIME_UNITS - ((year*WP_DAYS_IN_800_YEARS + WP_EPOCH_OFFSET) % WP_TIME_UNITS);
+    y.uccapon = (WP_UCCAPON_CONST + y.horakhun) % WP_APOGEE_ROT;
+    const avoQuot = Math.floor((y.horakhun*11 + 650) / 692);
+    y.avoman = (y.horakhun*11 + 650) % 692;
+    if (y.avoman === 0) y.avoman = 692;
+    y.masaken = Math.floor((avoQuot + y.horakhun) / 30);
+    y.tithi = (avoQuot + y.horakhun) % 30;
+    if (y.avoman === 692) y.tithi -= 1;
+    y.weekday = y.horakhun % 7;
+
+    const horakhun1 = Math.floor(((year+1)*WP_DAYS_IN_800_YEARS + WP_EPOCH_OFFSET) / WP_TIME_UNITS) + 1;
+    const quot1 = Math.floor((horakhun1*11 + 650) / 692);
+    const tithi1 = (quot1 + horakhun1) % 30;
+
+    y.langsak = y.tithi > 1 ? y.tithi : 1;
+    y.nyd = y.langsak;
+    if (y.nyd < 6) y.nyd += 29;
+    y.nyd = (y.weekday - y.nyd + 1 + 35) % 7;
+
+    y.leapday = y.kammacapon <= 207;
+
+    y.cal_type = 'A';
+    if (y.tithi > 24 || y.tithi < 6) y.cal_type = 'C';
+    if (y.tithi === 25 && tithi1 === 5) y.cal_type = 'A';
+    if ((y.leapday && y.avoman <= 126) || (!y.leapday && y.avoman <= 137)) {
+        y.cal_type = y.cal_type !== 'C' ? 'B' : 'c';
+    }
+
+    if (y.cal_type === 'A') y.next_nyd = (y.nyd+4) % 7;
+    else if (y.cal_type === 'B') y.next_nyd = (y.nyd+5) % 7;
+    else y.next_nyd = (y.nyd+6) % 7;
+    y.offset = false;
+    return y;
+}
+
+function _wpCalculateYear0(year) {
+    const y = [-2,-1,0,1,2].map(o => _wpLSYear(year+o));
+    for (let i=0;i<5;i++) {
+        if (y[2].tithi === 24 && y[3].tithi === 6) {
+            y[i].cal_type = 'C';
+            y[i].next_nyd = (y[i].next_nyd + 2) % 7;
+        }
+    }
+    for (let i=1;i<=3;i++) {
+        if (y[i].cal_type === 'c') {
+            const j = (y[i].nyd === y[i-1].next_nyd) ? 1 : -1;
+            y[i+j].cal_type = 'B';
+            y[i+j].next_nyd = (y[i+j].next_nyd + 1) % 7;
+        }
+    }
+    for (let i=1;i<=3;i++) {
+        if (y[i-1].next_nyd !== y[i].nyd && y[i].next_nyd !== y[i+1].nyd) {
+            y[i].offset = true;
+            y[i].langsak += 1;
+            y[i].nyd = (y[i].nyd + 6) % 7;
+            y[i].next_nyd = (y[i].next_nyd + 6) % 7;
+        }
+    }
+    for (let i=0;i<5;i++) {
+        if (y[i].cal_type === 'c') y[i].cal_type = 'C';
+    }
+    y[2].offset_days = y[2].langsak;
+    if (y[2].offset_days < (6 + (y[2].offset?1:0))) {
+        y[2].offset_days += 29;
+    }
+    return y[2];
+}
+
+const WP_LUNAR_MONTHS_MAP = {1:5,2:6,3:7,4:8,5:9,6:10,7:11,8:12,9:1,10:2,11:3,12:4,13:8,14:88,15:15,16:16};
+const WP_VALS = {
+    A: [[383,16],[354,15],[324,12],[295,11],[265,10],[236,9],[206,8],[177,7],[147,6],[118,5],[88,4],[59,3],[29,2]],
+    B: [[384,16],[355,15],[325,12],[296,11],[266,10],[237,9],[207,8],[178,7],[148,6],[119,5],[89,4],[59,3],[29,2]],
+    C: [[384,15],[354,12],[325,11],[295,10],[266,9],[236,8],[207,7],[177,6],[148,5],[118,14],[88,13],[59,3],[29,2]],
+};
+function _wpFindDate(cal, days) {
+    let month = WP_LUNAR_MONTHS_MAP[1];
+    for (const pair of WP_VALS[cal]) {
+        const a = pair[0], b = pair[1];
+        if (days > a) return [WP_LUNAR_MONTHS_MAP[b], days - a];
+        month = WP_LUNAR_MONTHS_MAP[1];
+    }
+    return [month, days];
+}
+
+function _wpFromYD(year, days) {
+    let year0 = _wpCalculateYear0(year);
+    let daysInYear = 365 + (year0.leapday?1:0);
+    while (days > daysInYear) {
+        year += 1; days -= daysInYear;
+        year0 = _wpCalculateYear0(year);
+        daysInYear = 365 + (year0.leapday?1:0);
+    }
+    const totalDays = year0.offset_days + days;
+    const md = _wpFindDate(year0.cal_type, totalDays);
+    return { year, month: md[0], day: md[1], calType: year0.cal_type, totalDays };
+}
+
+function _wpFromJulianDay(jd) {
+    const hk = jd - WP_CS_JD_OFFSET;
+    let year = Math.floor((hk*800 - 373) / 292207);
+    let days;
+    if (hk % 292207 === 95333) { year -= 1; days = 365; }
+    else { const year0 = _wpCalculateYear0(year); days = hk - year0.horakhun; }
+    return _wpFromYD(year, days);
+}
+
+function isWanPhra(gy, gm, gd) {
+    const jd = _wpToJulianDay(gy, gm, gd);
+    const r = _wpFromJulianDay(jd);
+    const peek = _wpFindDate(r.calType, r.totalDays + 1);
+    const isLastDayOfMonth = peek[0] !== r.month;
+    const isWaning = r.day > 15;
+    const dispDay = isWaning ? r.day - 15 : r.day;
+    if (!isWaning && (dispDay === 8 || dispDay === 15)) return true;
+    if (isWaning && (dispDay === 8 || isLastDayOfMonth)) return true;
+    return false;
+}
+
 // ===== Calendar =====
 function changeMonth(d) {
     curMonth += d;
@@ -1559,9 +1700,12 @@ function renderCal() {
         const dateStr = `${curYear}-${pad2(curMonth)}-${pad2(d)}`;
         const pair = rotConfig.anchorDate ? getPairForDate(dateStr, rotConfig.anchorDate, rotConfig.patternId) : null;
         const teamBadge = pair ? `<div class="team-pair"><span class="tp-m">🌞${pair.m}</span><span class="tp-n">🌙${pair.n}</span></div>` : '';
+        const wpIcon = isWanPhra(curYear, curMonth, d)
+            ? '<svg class="wp-icon" viewBox="0 0 24 24" width="13" height="13"><circle cx="12" cy="3.5" r="1.3" fill="currentColor"/><circle cx="12" cy="8" r="3" fill="currentColor"/><path d="M12 11.5c5 0 7 4.5 7 9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1c0-4.5 2-9 7-9z" fill="currentColor"/></svg>'
+            : '';
         weekHtml += `<div class="${cls}" onclick="openDayModal('${key}',${d})">
             ${hasOT?'<span class="ot-dot"></span>':''}
-            <span class="d-num">${d}</span>${badge}${holBadge}${teamBadge}</div>`;
+            <div class="d-num-row"><span class="d-num">${d}</span>${wpIcon}</div>${badge}${holBadge}${teamBadge}</div>`;
         const gridPos = firstDow + d - 1;
         const isEndOfWeek = gridPos % 7 === 6;
         const isLastDay = d === daysInMonth;
