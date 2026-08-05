@@ -41,7 +41,7 @@
             --cal-extra-stripe: #7C3AED;
             --focus-ring:  rgba(236,72,153,.18);
             --nav-h: 60px;
-            --brand-h: 46px;
+            --brand-h: 40px;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -161,7 +161,7 @@
         }
         .soicoder-mark {
             width: 32px;
-            height: 35px;
+            height: 28px;
             flex-shrink: 0;
             filter: drop-shadow(0 0 3px #BD93F9) drop-shadow(0 0 3px #FF79C6) drop-shadow(0 0 8px rgba(189,147,249,.4));
         }
@@ -171,13 +171,22 @@
             color: #BD93F9;
             text-shadow: 0 0 6px rgba(189,147,249,.75), 0 0 16px rgba(189,147,249,.5), 0 0 30px rgba(189,147,249,.25);
         }
-        .soicoder-word small {
+        .soicoder-year {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 2px;
             font-size: .55em;
             letter-spacing: .06em;
             color: #FF79C6;
             text-shadow: 0 0 6px rgba(255,121,198,.7), 0 0 14px rgba(255,121,198,.4);
             margin-left: 5px;
             vertical-align: middle;
+        }
+        .soicoder-flagbar {
+            height: 3px;
+            border-radius: 1px;
+            background: linear-gradient(to right, #FF5555 0 33.33%, #F8F8F2 33.33% 66.66%, #2B3AA0 66.66% 100%);
         }
         @keyframes soicoder-flicker {
             0%, 4%, 8%, 100% { opacity: 1; }
@@ -951,7 +960,7 @@
 <!-- Brand footer — SOICODER badge (per SOICODER Brand Kit) -->
 <div class="brand-footer">
     <div class="soicoder-badge">
-        <svg class="soicoder-mark" viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <svg class="soicoder-mark" viewBox="0 0 120 104" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <ellipse cx="32" cy="88" rx="13" ry="10" fill="#BD93F9"/>
             <circle cx="18" cy="72" r="5.2" fill="#BD93F9"/>
             <circle cx="27" cy="62" r="5.5" fill="#BD93F9"/>
@@ -962,11 +971,8 @@
             <circle cx="73" cy="22" r="5.8" fill="#FF79C6"/>
             <circle cx="85" cy="22" r="5.8" fill="#FF79C6"/>
             <circle cx="95" cy="34" r="5.6" fill="#FF79C6"/>
-            <rect x="6" y="108" width="108" height="6.7" fill="#FF5555"/>
-            <rect x="6" y="114.7" width="108" height="6.7" fill="#F8F8F2"/>
-            <rect x="6" y="121.4" width="108" height="6.6" fill="#2B3AA0"/>
         </svg>
-        <span class="soicoder-word">SOICODER<small>2025</small></span>
+        <span class="soicoder-word">SOICODER<span class="soicoder-year">2025<span class="soicoder-flagbar" aria-hidden="true"></span></span></span>
     </div>
 </div>
 
