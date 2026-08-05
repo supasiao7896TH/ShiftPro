@@ -143,36 +143,48 @@
             position: sticky;
             bottom: calc(var(--nav-h) + var(--brand-h));
         }
-        /* Brand footer (logo strip above bottom nav) */
+        /* Brand footer (SOICODER signature strip above bottom nav) */
         .brand-footer {
             position: fixed; left: 0; right: 0; bottom: var(--nav-h);
             height: var(--brand-h);
-            background: var(--surface);
-            border-top: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: center; gap: 6px;
+            background: #16141F;
+            border-top: 1px solid rgba(189,147,249,.35);
+            display: flex; align-items: center; justify-content: center; gap: 7px;
             z-index: 25;
         }
         .brand-flag {
             width: 22px; height: 22px; border-radius: 5px; overflow: hidden;
             display: flex; flex-direction: column; flex-shrink: 0;
+            box-shadow: 0 0 6px rgba(189,147,249,.35);
         }
-        .brand-flag div:nth-child(1) { flex: 1; background: #A51931; }
-        .brand-flag div:nth-child(2) { flex: 1; background: #F4F5F8; }
-        .brand-flag div:nth-child(3) { flex: 2; background: #2D2A4A; }
-        .brand-flag div:nth-child(4) { flex: 1; background: #F4F5F8; }
-        .brand-flag div:nth-child(5) { flex: 1; background: #A51931; }
+        .brand-flag div:nth-child(1) { flex: 1; background: #FF5555; }
+        .brand-flag div:nth-child(2) { flex: 1; background: #F8F8F2; }
+        .brand-flag div:nth-child(3) { flex: 2; background: #2B3AA0; }
+        .brand-flag div:nth-child(4) { flex: 1; background: #F8F8F2; }
+        .brand-flag div:nth-child(5) { flex: 1; background: #FF5555; }
         .brand-name {
-            font-family: 'Sarabun', sans-serif; font-weight: 700; font-size: 12px;
-            color: var(--text); letter-spacing: -0.01em; white-space: nowrap;
+            font-family: ui-monospace, 'IBM Plex Mono', 'Sarabun', monospace; font-weight: 700; font-size: 12px;
+            letter-spacing: .04em; white-space: nowrap; color: #BD93F9;
+            text-shadow: 0 0 4px rgba(189,147,249,.85), 0 0 10px rgba(189,147,249,.5);
+            animation: brand-flicker 4.2s infinite ease-in-out;
         }
-        .brand-name span { font-family: monospace; font-weight: 500; color: oklch(0.58 0.19 280); }
+        @keyframes brand-flicker {
+            0%, 4%, 8%, 100% { opacity: 1; }
+            5% { opacity: .6; }
+            6% { opacity: 1; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .brand-name { animation: none; }
+        }
         .brand-paws { position: relative; width: 20px; height: 17px; flex-shrink: 0; }
         .brand-paw { position: absolute; width: 11px; height: 11px; }
         .brand-paw:nth-child(1) { left: 0; top: 4px; transform: rotate(-18deg); }
         .brand-paw:nth-child(2) { left: 9px; top: -1px; transform: rotate(14deg); }
         .brand-paw span {
-            position: absolute; border-radius: 50%; background: oklch(0.68 0.16 50);
+            position: absolute; border-radius: 50%;
         }
+        .brand-paw:nth-child(1) span { background: #BD93F9; box-shadow: 0 0 4px rgba(189,147,249,.85), 0 0 8px rgba(189,147,249,.5); }
+        .brand-paw:nth-child(2) span { background: #FF79C6; box-shadow: 0 0 4px rgba(255,121,198,.85), 0 0 8px rgba(255,121,198,.5); }
         .brand-paw .pad { left: 2px; top: 4px; width: 7px; height: 5px; }
         .brand-paw .toe1 { left: 0; top: 1px; width: 3px; height: 3px; }
         .brand-paw .toe2 { left: 2.5px; top: -1px; width: 3px; height: 3.5px; }
@@ -936,7 +948,7 @@
 <!-- Brand footer -->
 <div class="brand-footer">
     <div class="brand-flag"><div></div><div></div><div></div><div></div><div></div></div>
-    <span class="brand-name">Supasit<span>@1981th</span></span>
+    <span class="brand-name">SOICODER</span>
     <div class="brand-paws">
         <div class="brand-paw"><span class="pad"></span><span class="toe1"></span><span class="toe2"></span><span class="toe3"></span><span class="toe4"></span></div>
         <div class="brand-paw"><span class="pad"></span><span class="toe1"></span><span class="toe2"></span><span class="toe3"></span><span class="toe4"></span></div>
