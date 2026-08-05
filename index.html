@@ -41,7 +41,7 @@
             --cal-extra-stripe: #7C3AED;
             --focus-ring:  rgba(236,72,153,.18);
             --nav-h: 60px;
-            --brand-h: 34px;
+            --brand-h: 46px;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -155,21 +155,36 @@
         .soicoder-badge {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             font-family: 'VT323', ui-monospace, monospace;
+            animation: soicoder-flicker 4.2s infinite ease-in-out;
         }
         .soicoder-mark {
-            width: 20px;
-            height: 22px;
+            width: 32px;
+            height: 35px;
             color: #BD93F9; /* Dracula purple — swap to #FF79C6 (pink) for a variant */
-            filter: drop-shadow(0 0 3px #BD93F9);
+            filter: drop-shadow(0 0 3px #BD93F9) drop-shadow(0 0 8px rgba(189,147,249,.5));
             flex-shrink: 0;
         }
         .soicoder-word {
-            font-size: 1.15rem;
+            font-size: 1.65rem;
             letter-spacing: .02em;
             color: #BD93F9;
-            text-shadow: 0 0 6px rgba(189,147,249,.7), 0 0 14px rgba(189,147,249,.4);
+            text-shadow: 0 0 6px rgba(189,147,249,.75), 0 0 16px rgba(189,147,249,.5), 0 0 30px rgba(189,147,249,.25);
+        }
+        @keyframes soicoder-flicker {
+            0%, 4%, 8%, 100% { opacity: 1; }
+            5% { opacity: .45; }
+            6% { opacity: 1; }
+            47% { opacity: 1; }
+            48% { opacity: .6; }
+            49% { opacity: 1; }
+            74% { opacity: 1; }
+            75% { opacity: .7; }
+            76% { opacity: 1; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .soicoder-badge { animation: none; }
         }
         .sum-item { text-align: center; }
         .sum-label { font-size: 10px; color: var(--text-muted); }
