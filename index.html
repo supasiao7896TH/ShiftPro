@@ -18,7 +18,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=Oswald:wght@400;600;700&family=VT323&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #EC4899;
@@ -143,52 +143,34 @@
             position: sticky;
             bottom: calc(var(--nav-h) + var(--brand-h));
         }
-        /* Brand footer (SOICODER signature strip above bottom nav) */
+        /* Brand footer (SOICODER badge above bottom nav) — per SOICODER Brand Kit */
         .brand-footer {
             position: fixed; left: 0; right: 0; bottom: var(--nav-h);
             height: var(--brand-h);
             background: #FFFFFF;
             border-top: 1px solid #E5E7EB;
-            display: flex; align-items: center; justify-content: center; gap: 7px;
+            display: flex; align-items: center; justify-content: center;
             z-index: 25;
         }
-        .brand-flag {
-            width: 22px; height: 22px; border-radius: 5px; overflow: hidden;
-            display: flex; flex-direction: column; flex-shrink: 0;
-            border: 1px solid rgba(0,0,0,.08);
+        .soicoder-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'VT323', ui-monospace, monospace;
         }
-        .brand-flag div:nth-child(1) { flex: 1; background: #FF5555; }
-        .brand-flag div:nth-child(2) { flex: 1; background: #F8F8F2; }
-        .brand-flag div:nth-child(3) { flex: 2; background: #2B3AA0; }
-        .brand-flag div:nth-child(4) { flex: 1; background: #F8F8F2; }
-        .brand-flag div:nth-child(5) { flex: 1; background: #FF5555; }
-        .brand-name {
-            font-family: ui-monospace, 'IBM Plex Mono', 'Sarabun', monospace; font-weight: 700; font-size: 12px;
-            letter-spacing: .04em; white-space: nowrap; color: oklch(0.58 0.19 280);
-            animation: brand-flicker 4.2s infinite ease-in-out;
+        .soicoder-mark {
+            width: 20px;
+            height: 22px;
+            color: #BD93F9; /* Dracula purple — swap to #FF79C6 (pink) for a variant */
+            filter: drop-shadow(0 0 3px #BD93F9);
+            flex-shrink: 0;
         }
-        @keyframes brand-flicker {
-            0%, 4%, 8%, 100% { opacity: 1; }
-            5% { opacity: .6; }
-            6% { opacity: 1; }
+        .soicoder-word {
+            font-size: 1.15rem;
+            letter-spacing: .02em;
+            color: #BD93F9;
+            text-shadow: 0 0 6px rgba(189,147,249,.7), 0 0 14px rgba(189,147,249,.4);
         }
-        @media (prefers-reduced-motion: reduce) {
-            .brand-name { animation: none; }
-        }
-        .brand-paws { position: relative; width: 20px; height: 17px; flex-shrink: 0; }
-        .brand-paw { position: absolute; width: 11px; height: 11px; }
-        .brand-paw:nth-child(1) { left: 0; top: 4px; transform: rotate(-18deg); }
-        .brand-paw:nth-child(2) { left: 9px; top: -1px; transform: rotate(14deg); }
-        .brand-paw span {
-            position: absolute; border-radius: 50%;
-        }
-        .brand-paw:nth-child(1) span { background: #8B5CF6; }
-        .brand-paw:nth-child(2) span { background: #EC4899; }
-        .brand-paw .pad { left: 2px; top: 4px; width: 7px; height: 5px; }
-        .brand-paw .toe1 { left: 0; top: 1px; width: 3px; height: 3px; }
-        .brand-paw .toe2 { left: 2.5px; top: -1px; width: 3px; height: 3.5px; }
-        .brand-paw .toe3 { left: 5.5px; top: -1px; width: 3px; height: 3.5px; }
-        .brand-paw .toe4 { left: 8px; top: 1px; width: 3px; height: 3px; }
         .sum-item { text-align: center; }
         .sum-label { font-size: 10px; color: var(--text-muted); }
         .sum-val { font-size: 15px; font-weight: 700; }
@@ -944,13 +926,25 @@
     </div>
 </div>
 
-<!-- Brand footer -->
+<!-- Brand footer — SOICODER badge (per SOICODER Brand Kit) -->
 <div class="brand-footer">
-    <div class="brand-flag"><div></div><div></div><div></div><div></div><div></div></div>
-    <span class="brand-name">SOICODER</span>
-    <div class="brand-paws">
-        <div class="brand-paw"><span class="pad"></span><span class="toe1"></span><span class="toe2"></span><span class="toe3"></span><span class="toe4"></span></div>
-        <div class="brand-paw"><span class="pad"></span><span class="toe1"></span><span class="toe2"></span><span class="toe3"></span><span class="toe4"></span></div>
+    <div class="soicoder-badge">
+        <svg class="soicoder-mark" viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <ellipse cx="32" cy="88" rx="13" ry="10" fill="currentColor"/>
+            <circle cx="18" cy="72" r="5.2" fill="currentColor"/>
+            <circle cx="27" cy="62" r="5.5" fill="currentColor"/>
+            <circle cx="38" cy="62" r="5.5" fill="currentColor"/>
+            <circle cx="47" cy="73" r="5.2" fill="currentColor"/>
+            <ellipse cx="80" cy="50" rx="14" ry="11" fill="currentColor"/>
+            <circle cx="63" cy="33" r="5.6" fill="currentColor"/>
+            <circle cx="73" cy="22" r="5.8" fill="currentColor"/>
+            <circle cx="85" cy="22" r="5.8" fill="currentColor"/>
+            <circle cx="95" cy="34" r="5.6" fill="currentColor"/>
+            <rect x="6" y="108" width="108" height="6.7" fill="#FF5555"/>
+            <rect x="6" y="114.7" width="108" height="6.7" fill="#F8F8F2"/>
+            <rect x="6" y="121.4" width="108" height="6.6" fill="#2B3AA0"/>
+        </svg>
+        <span class="soicoder-word">SOICODER</span>
     </div>
 </div>
 
