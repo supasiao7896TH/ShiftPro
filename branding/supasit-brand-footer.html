@@ -1,7 +1,7 @@
 <!--
   SOICODER brand footer — reusable drop-in snippet.
-  (formerly "Supasit@1981th"; renamed + restyled to the SOICODER identity —
-  dark Dracula palette, neon-purple/pink glow, Thai-flag paw trail.)
+  (formerly "Supasit@1981th"; renamed to SOICODER — Thai-flag paw trail,
+  purple/pink accent colors, light background.)
 
   HOW TO USE IN A NEW APP:
   1. Copy the <style> block below into your app's <head> (or merge the rules
@@ -14,22 +14,20 @@
      `bottom: <your-nav-height>;` (e.g. `bottom: 60px;`) so the two don't
      overlap, and add that same height to your page's bottom padding.
   4. No external fonts or images required — everything is plain CSS shapes.
-     The strip is intentionally dark (#16141F) regardless of the host app's
-     own theme, so it always reads as the SOICODER signature.
 -->
 <style>
   .brand-footer {
     position: fixed; left: 0; right: 0; bottom: 0; /* adjust bottom offset if you have a bottom nav */
     height: 34px;
-    background: #16141F;
-    border-top: 1px solid rgba(189,147,249,.35);
+    background: #FFFFFF;
+    border-top: 1px solid #E5E7EB;
     display: flex; align-items: center; justify-content: center; gap: 7px;
     z-index: 25;
   }
   .brand-flag {
     width: 22px; height: 22px; border-radius: 5px; overflow: hidden;
     display: flex; flex-direction: column; flex-shrink: 0;
-    box-shadow: 0 0 6px rgba(189,147,249,.35);
+    border: 1px solid rgba(0,0,0,.08);
   }
   .brand-flag div:nth-child(1) { flex: 1; background: #FF5555; }
   .brand-flag div:nth-child(2) { flex: 1; background: #F8F8F2; }
@@ -39,8 +37,7 @@
   .brand-name {
     font-family: ui-monospace, 'IBM Plex Mono', 'Segoe UI', monospace;
     font-weight: 700; font-size: 12px;
-    letter-spacing: .04em; white-space: nowrap; color: #BD93F9;
-    text-shadow: 0 0 4px rgba(189,147,249,.85), 0 0 10px rgba(189,147,249,.5);
+    letter-spacing: .04em; white-space: nowrap; color: oklch(0.58 0.19 280);
     animation: brand-flicker 4.2s infinite ease-in-out;
   }
   @keyframes brand-flicker {
@@ -58,8 +55,8 @@
   .brand-paw span {
     position: absolute; border-radius: 50%;
   }
-  .brand-paw:nth-child(1) span { background: #BD93F9; box-shadow: 0 0 4px rgba(189,147,249,.85), 0 0 8px rgba(189,147,249,.5); }
-  .brand-paw:nth-child(2) span { background: #FF79C6; box-shadow: 0 0 4px rgba(255,121,198,.85), 0 0 8px rgba(255,121,198,.5); }
+  .brand-paw:nth-child(1) span { background: #8B5CF6; }
+  .brand-paw:nth-child(2) span { background: #EC4899; }
   .brand-paw .pad { left: 2px; top: 4px; width: 7px; height: 5px; }
   .brand-paw .toe1 { left: 0; top: 1px; width: 3px; height: 3px; }
   .brand-paw .toe2 { left: 2.5px; top: -1px; width: 3px; height: 3.5px; }
