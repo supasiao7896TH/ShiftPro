@@ -162,15 +162,22 @@
         .soicoder-mark {
             width: 32px;
             height: 35px;
-            color: #BD93F9; /* Dracula purple — swap to #FF79C6 (pink) for a variant */
-            filter: drop-shadow(0 0 3px #BD93F9) drop-shadow(0 0 8px rgba(189,147,249,.5));
             flex-shrink: 0;
+            filter: drop-shadow(0 0 3px #BD93F9) drop-shadow(0 0 3px #FF79C6) drop-shadow(0 0 8px rgba(189,147,249,.4));
         }
         .soicoder-word {
-            font-size: 1.65rem;
+            font-size: 1.35rem;
             letter-spacing: .02em;
             color: #BD93F9;
             text-shadow: 0 0 6px rgba(189,147,249,.75), 0 0 16px rgba(189,147,249,.5), 0 0 30px rgba(189,147,249,.25);
+        }
+        .soicoder-word small {
+            font-size: .55em;
+            letter-spacing: .06em;
+            color: #FF79C6;
+            text-shadow: 0 0 6px rgba(255,121,198,.7), 0 0 14px rgba(255,121,198,.4);
+            margin-left: 5px;
+            vertical-align: middle;
         }
         @keyframes soicoder-flicker {
             0%, 4%, 8%, 100% { opacity: 1; }
@@ -945,21 +952,21 @@
 <div class="brand-footer">
     <div class="soicoder-badge">
         <svg class="soicoder-mark" viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <ellipse cx="32" cy="88" rx="13" ry="10" fill="currentColor"/>
-            <circle cx="18" cy="72" r="5.2" fill="currentColor"/>
-            <circle cx="27" cy="62" r="5.5" fill="currentColor"/>
-            <circle cx="38" cy="62" r="5.5" fill="currentColor"/>
-            <circle cx="47" cy="73" r="5.2" fill="currentColor"/>
-            <ellipse cx="80" cy="50" rx="14" ry="11" fill="currentColor"/>
-            <circle cx="63" cy="33" r="5.6" fill="currentColor"/>
-            <circle cx="73" cy="22" r="5.8" fill="currentColor"/>
-            <circle cx="85" cy="22" r="5.8" fill="currentColor"/>
-            <circle cx="95" cy="34" r="5.6" fill="currentColor"/>
+            <ellipse cx="32" cy="88" rx="13" ry="10" fill="#BD93F9"/>
+            <circle cx="18" cy="72" r="5.2" fill="#BD93F9"/>
+            <circle cx="27" cy="62" r="5.5" fill="#BD93F9"/>
+            <circle cx="38" cy="62" r="5.5" fill="#BD93F9"/>
+            <circle cx="47" cy="73" r="5.2" fill="#BD93F9"/>
+            <ellipse cx="80" cy="50" rx="14" ry="11" fill="#FF79C6"/>
+            <circle cx="63" cy="33" r="5.6" fill="#FF79C6"/>
+            <circle cx="73" cy="22" r="5.8" fill="#FF79C6"/>
+            <circle cx="85" cy="22" r="5.8" fill="#FF79C6"/>
+            <circle cx="95" cy="34" r="5.6" fill="#FF79C6"/>
             <rect x="6" y="108" width="108" height="6.7" fill="#FF5555"/>
             <rect x="6" y="114.7" width="108" height="6.7" fill="#F8F8F2"/>
             <rect x="6" y="121.4" width="108" height="6.6" fill="#2B3AA0"/>
         </svg>
-        <span class="soicoder-word">SOICODER</span>
+        <span class="soicoder-word">SOICODER<small>2025</small></span>
     </div>
 </div>
 
