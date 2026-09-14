@@ -146,10 +146,14 @@
         /* Brand footer (logo strip above bottom nav) — fixed to the D1 "paper" ground
            regardless of app theme: brand colours never respond to light/dark mode. */
         .brand-footer {
-            position: fixed; left: 0; right: 0; bottom: var(--nav-h);
+            position: fixed; left: 50%; transform: translateX(-50%); bottom: var(--nav-h);
             height: var(--brand-h);
-            background: #F7F5FB;
-            border-top: 1px solid var(--border);
+            width: fit-content;
+            padding-inline: 18px;
+            background: rgba(255, 255, 255, .55);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 12px 12px 0 0;
             display: flex; align-items: center; justify-content: center;
             z-index: 25;
         }

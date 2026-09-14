@@ -37,13 +37,24 @@
 -->
 <style>
 .brand-footer {
-  position: fixed; left: 0; right: 0; bottom: 0; /* adjust bottom offset if you have a bottom nav */
+  /* width sized to content (not full-bleed) so the strip doesn't read as a
+     wide empty bar around a small mark — adjust padding-inline to taste */
+  position: fixed; left: 50%; transform: translateX(-50%); bottom: 0; /* adjust bottom offset if you have a bottom nav */
   height: 68px;
+  width: fit-content;
+  padding-inline: 18px;
   background: #F7F5FB;
-  border-top: 1px solid #E5E7EB;
+  border: 1px solid #E5E7EB;
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
   display: flex; align-items: center; justify-content: center;
   z-index: 25;
 }
+/* OmniShift-Ledger uses a translucent variant instead of the solid #F7F5FB
+   above (background: rgba(255,255,255,.55); backdrop-filter: blur(8px); no
+   border) — only safe when you've confirmed the app's page background is
+   itself always light with no dark-theme override, since D1 must never end
+   up compositing onto a dark surface. Verify that before copying it. */
 .brand-footer svg { display: block; height: 56px; width: auto; }
 .tube   { animation: sc-warm 2.6s steps(1, end) var(--wd, 0s) 1 both; }
 .tube-s { animation: sc-stut var(--sp, 13s) steps(1, end) var(--sd, 0s) infinite; }
