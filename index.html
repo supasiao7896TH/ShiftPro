@@ -41,7 +41,7 @@
             --cal-extra-stripe: #7C3AED;
             --focus-ring:  rgba(236,72,153,.18);
             --nav-h: 60px;
-            --brand-h: 92px;
+            --brand-h: 68px;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -153,7 +153,7 @@
             display: flex; align-items: center; justify-content: center;
             z-index: 25;
         }
-        .brand-footer svg { display: block; height: 76px; width: auto; }
+        .brand-footer svg { display: block; height: 56px; width: auto; }
         .sum-item { text-align: center; }
         .sum-label { font-size: 10px; color: var(--text-muted); }
         .sum-val { font-size: 15px; font-weight: 700; }
@@ -913,7 +913,42 @@
      "(i)" is recoloured to #FF5C8A (brand year-mark pink) against the rest of
      the wordmark's #B39DF3 violet, so the AI reading pops out of the name. -->
 <div class="brand-footer">
-<svg viewBox="-60 -60 1320 420" width="239" height="76" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A(i)CODER">
+<svg viewBox="-60 -60 1320 420" width="176" height="56" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A(i)CODER">
+<style>
+.tube   { animation: sc-warm 2.6s steps(1, end) var(--wd, 0s) 1 both; }
+.tube-s { animation: sc-stut var(--sp, 13s) steps(1, end) var(--sd, 0s) infinite; }
+.tube-b { animation: sc-breathe var(--bp, 6s) ease-in-out var(--bd, 0s) infinite; }
+@keyframes sc-warm {
+0%   { opacity: 0; }
+3%   { opacity: 1; }
+6%   { opacity: .06; }
+10%  { opacity: .85; }
+13%  { opacity: 0; }
+21%  { opacity: 1; }
+25%  { opacity: .1; }
+28%  { opacity: 1; }
+32%  { opacity: .35; }
+36%  { opacity: 1; }
+41%  { opacity: .15; }
+46%  { opacity: 1; }
+100% { opacity: 1; }
+}
+/* Lit at 0% so a cancelled animation leaves the sign on. */
+@keyframes sc-stut {
+0%, 95.6%   { opacity: 1; }
+96%         { opacity: .07; }
+96.4%       { opacity: 1; }
+97.2%       { opacity: .14; }
+97.6%, 100% { opacity: 1; }
+}
+@keyframes sc-breathe {
+0%, 100% { opacity: 1; }
+50%      { opacity: .87; }
+}
+@media (prefers-reduced-motion: reduce) {
+.tube, .tube-s, .tube-b { animation: none; opacity: 1; }
+}
+</style>
 <defs><filter id="b1f" x="-60%" y="-120%" width="220%" height="340%" color-interpolation-filters="sRGB">
 <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="far"/>
 <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="near"/>

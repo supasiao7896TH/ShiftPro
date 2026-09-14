@@ -8,7 +8,15 @@
 
   HOW TO USE IN A NEW APP:
   1. Copy the <style> block below into your app's <head> (or merge the
-     rules into your existing stylesheet).
+     rules into your existing stylesheet) — only the `.brand-footer` and
+     `.brand-footer svg` layout rules are actually required; the .tube/
+     .tube-s/.tube-b/@keyframes rules are duplicated here for reference
+     only. The SVG below embeds its own copy of those animation rules in
+     an internal <style>, so the flicker still runs even if this outer
+     block is skipped entirely — that's exactly the bug that shipped to
+     OmniShift-Ledger's index.html (layout rules got copied, animation
+     rules didn't, so the mark rendered static). Don't repeat that: keep
+     the SVG's internal <style> intact if you ever hand-edit this snippet.
   2. Copy the <div class="brand-footer">...</div> markup so it sits right
      before your closing </body> tag.
   3. By default this pins itself to the very bottom of the viewport
@@ -30,13 +38,13 @@
 <style>
 .brand-footer {
   position: fixed; left: 0; right: 0; bottom: 0; /* adjust bottom offset if you have a bottom nav */
-  height: 92px;
+  height: 68px;
   background: #F7F5FB;
   border-top: 1px solid #E5E7EB;
   display: flex; align-items: center; justify-content: center;
   z-index: 25;
 }
-.brand-footer svg { display: block; height: 76px; width: auto; }
+.brand-footer svg { display: block; height: 56px; width: auto; }
 .tube   { animation: sc-warm 2.6s steps(1, end) var(--wd, 0s) 1 both; }
 .tube-s { animation: sc-stut var(--sp, 13s) steps(1, end) var(--sd, 0s) infinite; }
 .tube-b { animation: sc-breathe var(--bp, 6s) ease-in-out var(--bd, 0s) infinite; }
@@ -73,7 +81,42 @@
 </style>
 
 <div class="brand-footer">
-<svg viewBox="-60 -60 1320 420" width="239" height="76" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A(i)CODER">
+<svg viewBox="-60 -60 1320 420" width="176" height="56" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A(i)CODER">
+<style>
+.tube   { animation: sc-warm 2.6s steps(1, end) var(--wd, 0s) 1 both; }
+.tube-s { animation: sc-stut var(--sp, 13s) steps(1, end) var(--sd, 0s) infinite; }
+.tube-b { animation: sc-breathe var(--bp, 6s) ease-in-out var(--bd, 0s) infinite; }
+@keyframes sc-warm {
+0%   { opacity: 0; }
+3%   { opacity: 1; }
+6%   { opacity: .06; }
+10%  { opacity: .85; }
+13%  { opacity: 0; }
+21%  { opacity: 1; }
+25%  { opacity: .1; }
+28%  { opacity: 1; }
+32%  { opacity: .35; }
+36%  { opacity: 1; }
+41%  { opacity: .15; }
+46%  { opacity: 1; }
+100% { opacity: 1; }
+}
+/* Lit at 0% so a cancelled animation leaves the sign on. */
+@keyframes sc-stut {
+0%, 95.6%   { opacity: 1; }
+96%         { opacity: .07; }
+96.4%       { opacity: 1; }
+97.2%       { opacity: .14; }
+97.6%, 100% { opacity: 1; }
+}
+@keyframes sc-breathe {
+0%, 100% { opacity: 1; }
+50%      { opacity: .87; }
+}
+@media (prefers-reduced-motion: reduce) {
+.tube, .tube-s, .tube-b { animation: none; opacity: 1; }
+}
+</style>
 <defs><filter id="b1f" x="-60%" y="-120%" width="220%" height="340%" color-interpolation-filters="sRGB">
 <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="far"/>
 <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="near"/>
