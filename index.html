@@ -18,7 +18,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=Oswald:wght@400;600;700&family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #EC4899;
@@ -143,17 +143,19 @@
             position: sticky;
             bottom: calc(var(--nav-h) + 10px + var(--brand-h));
         }
-        /* Brand footer (logo strip above bottom nav) — fixed to the D1 "paper" ground
-           regardless of app theme: brand colours never respond to light/dark mode. */
+        /* Brand footer (logo strip above bottom nav) — พื้นหลังใช้ var(--bg) กลืนกับหน้าเว็บ
+           ตามธีม จึงต้องให้สีตัวอักษร/ตัว "A" ปรับตามธีมเข้มด้วย ไม่งั้นมองไม่เห็นบน graphite */
         .brand-footer {
-            position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(var(--nav-h) + 10px);
-            height: var(--brand-h);
-            width: fit-content;
+            position: fixed; left: 0; right: 0; bottom: var(--nav-h);
+            height: calc(var(--brand-h) + 10px);
+            padding-bottom: 10px;
+            background: var(--bg);
             display: flex; align-items: center; justify-content: center;
-            pointer-events: none;
             z-index: 25;
         }
         .brand-footer svg { display: block; height: 56px; width: auto; }
+        .brand-footer svg text { fill: var(--text); }
+        body[data-theme="graphite"] .brand-footer g[fill="#1D4ED8"] { fill: #60A5FA; }
         .sum-item { text-align: center; }
         .sum-label { font-size: 10px; color: var(--text-muted); }
         .sum-val { font-size: 15px; font-weight: 700; }
