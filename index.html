@@ -557,6 +557,10 @@
                 <span class="set-row-label">จัดการเหตุผล</span>
                 <svg width="16" height="16" fill="#9CA3AF" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
             </div>
+            <div class="set-row" onclick="openPeopleModal()">
+                <span class="set-row-label">จัดการรายชื่อเพื่อนร่วมงาน</span>
+                <svg width="16" height="16" fill="#9CA3AF" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
+            </div>
             <div class="set-row" onclick="backupData()">
                 <span class="set-row-label">สำรองข้อมูล (Backup)</span>
                 <svg width="16" height="16" fill="#9CA3AF" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L6.354 8.146a.5.5 0 0 0-.708.708l3 3z"/></svg>
@@ -1027,8 +1031,9 @@
             <div><label class="fl">OT 2.0× (ชม.)</label><input type="number" inputmode="decimal" id="mi-ot20" class="fi" min="0" step="0.25" placeholder="0"></div>
             <div><label class="fl">OT 3.0× (ชม.)</label><input type="number" inputmode="decimal" id="mi-ot30" class="fi" min="0" step="0.25" placeholder="0"></div>
         </div>
-        <div style="margin-bottom:12px"><label class="fl">เหตุผล</label><select id="mi-reason" class="fi" onchange="toggleLeaveHrsRow()"></select></div>
+        <div style="margin-bottom:12px"><label class="fl">เหตุผล</label><select id="mi-reason" class="fi" onchange="toggleLeaveHrsRow();togglePersonRow()"></select></div>
         <div id="mi-leave-hrs-row" style="display:none;margin-bottom:12px"><label class="fl">ชั่วโมงที่ลา <span style="font-size:10px;font-weight:400;color:var(--text-muted)">(เว้นว่าง = เต็มวัน)</span></label><input type="number" inputmode="decimal" id="mi-leave-hrs" class="fi" min="0" max="12" step="0.5" placeholder="เช่น 2 ชม. = ลาครึ่งเช้า"></div>
+        <div id="mi-person-row" style="display:none;margin-bottom:12px"><label class="fl">เลือกคน <span style="font-size:10px;font-weight:400;color:var(--text-muted)">(ใส่ชื่อลงช่องรายละเอียดให้)</span></label><select id="mi-person" class="fi" onchange="pickPerson()"></select></div>
         <div style="margin-bottom:18px"><label class="fl">รายละเอียด</label><input type="text" id="mi-detail" class="fi" placeholder="เพิ่มรายละเอียด..."></div>
         <button onclick="saveDayModal()" class="btn-p">บันทึก</button>
     </div>
@@ -1112,6 +1117,28 @@
         <div style="display:flex;gap:8px">
             <input type="text" id="new-reason" class="fi" style="flex:1" placeholder="เหตุผลใหม่...">
             <button onclick="addReason()" class="btn-p" style="width:auto;padding:10px 16px;font-size:14px">เพิ่ม</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== MODAL: People Manager ===== -->
+<div id="modal-people" class="overlay" style="display:none" onclick="overlayClose('modal-people',event)">
+    <div class="sheet" onclick="event.stopPropagation()">
+        <div class="sheet-handle"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <div style="font-size:17px;font-weight:700">จัดการรายชื่อเพื่อนร่วมงาน</div>
+            <button onclick="closeModal('modal-people')" style="background:none;border:none;cursor:pointer;color:var(--text-muted);padding:4px">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg>
+            </button>
+        </div>
+        <div style="font-size:11px;color:var(--text-muted);margin-bottom:12px;line-height:1.5">ไว้เลือกในปฏิทินตอนบันทึกลา / แทนกะ</div>
+        <div id="people-list" style="max-height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:12px"></div>
+        <div style="display:flex;gap:8px">
+            <input type="text" id="new-person-name" class="fi" style="flex:1;min-width:0" maxlength="30" placeholder="ชื่อ..." onkeydown="if(event.key==='Enter')addPerson()">
+            <select id="new-person-team" class="fi" style="width:auto;flex-shrink:0">
+                <option value="A">กะ A</option><option value="B">กะ B</option><option value="C">กะ C</option><option value="D">กะ D</option>
+            </select>
+            <button onclick="addPerson()" class="btn-p" style="width:auto;padding:10px 16px;font-size:14px;flex-shrink:0">เพิ่ม</button>
         </div>
     </div>
 </div>
@@ -1361,6 +1388,7 @@ const VAR_HOL_NAMES = {
 };
 // ===== Custom Holidays =====
 let customHols = [];
+let peopleList = [];
 function loadCustomHols() {
     try { customHols = JSON.parse(SS.get('custom_holidays') || '[]'); } catch(e) { customHols = []; }
 }
@@ -1483,7 +1511,7 @@ function renderBrandStrip() {
 window.onload = function() {
     const t = new Date();
     curYear = t.getFullYear(); curMonth = t.getMonth()+1; statsYear = curYear;
-    loadSettings(); loadReasons(); loadRotConfig(); loadCustomHols(); loadTheme();
+    loadSettings(); loadReasons(); loadRotConfig(); loadCustomHols(); loadPeople(); loadTheme();
     renderPatternSelect();
     renderBrandStrip();
     $('restore-file').onchange = restoreData;
@@ -2342,6 +2370,8 @@ function openDayModal(key, day) {
     $('mi-reason').innerHTML = reasonOpts.map(r=>`<option value="${eh(r)}"${r===(d.reason||'')?'selected':''}>${eh(r)}</option>`).join('');
     $('mi-leave-hrs').value = d.leaveHours > 0 ? d.leaveHours : '';
     toggleLeaveHrsRow();
+    renderPersonSelect();
+    togglePersonRow();
     openModal('modal-day');
 }
 
@@ -3045,6 +3075,96 @@ function renderReasonList() {
 function addReason() {
     const inp=$('new-reason'), v=inp.value.trim();
     if(v&&!reasonOpts.includes(v)){reasonOpts.push(v);SS.set('reasonOptionsV2',JSON.stringify(reasonOpts));inp.value='';renderReasonList();showToast('เพิ่มเหตุผลแล้ว');}
+}
+
+// ===== People (รายชื่อเพื่อนร่วมงาน) =====
+const PEOPLE_TEAMS = ['A','B','C','D'];
+const PEOPLE_MAX = 60;
+
+function loadPeople() {
+    peopleList = [];
+    try {
+        const a = JSON.parse(SS.get('people_v1') || '[]');
+        if (!Array.isArray(a)) return;
+        // restore รับ string อะไรก็ได้ จึงกรองรูปแบบอีกชั้น
+        peopleList = a
+            .filter(p => p && typeof p.name === 'string' && p.name.trim() && PEOPLE_TEAMS.includes(p.team))
+            .map(p => ({ name: p.name.trim().slice(0, 30), team: p.team }))
+            .slice(0, PEOPLE_MAX);
+    } catch (e) { peopleList = []; }
+}
+
+function savePeople() { SS.set('people_v1', JSON.stringify(peopleList)); }
+function personLabel(p) { return `${p.name} กะ ${p.team}`; }
+
+function openPeopleModal() { renderPeopleList(); openModal('modal-people'); }
+
+function renderPeopleList() {
+    const list = $('people-list'); list.innerHTML = '';
+    if (!peopleList.length) {
+        const empty = document.createElement('div');
+        empty.style.cssText = 'font-size:12px;color:var(--text-muted);text-align:center;padding:12px 0';
+        empty.textContent = 'ยังไม่มีรายชื่อ';
+        list.appendChild(empty);
+        return;
+    }
+    peopleList.forEach((p, i) => {
+        const div = document.createElement('div');
+        div.style.cssText = 'display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:10px';
+        const nm = document.createElement('span');
+        nm.textContent = p.name;
+        nm.style.cssText = 'flex:1;min-width:0;font-size:14px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap';
+        const tm = document.createElement('span');
+        tm.textContent = `กะ ${p.team}`;
+        tm.style.cssText = 'flex-shrink:0;font-size:11px;font-weight:700;color:var(--primary);background:var(--primary-light);border-radius:6px;padding:2px 8px';
+        const btn = document.createElement('button');
+        btn.setAttribute('aria-label', `ลบ ${p.name}`);
+        btn.style.cssText = 'background:none;border:none;cursor:pointer;color:#EF4444;padding:4px;flex-shrink:0';
+        btn.innerHTML = '<svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>';
+        btn.onclick = () => showConfirm(`ลบ "${personLabel(p)}"?`, () => {
+            hapticFeedback('delete');
+            peopleList.splice(i, 1);
+            savePeople(); renderPeopleList(); showToast('ลบแล้ว');
+        });
+        div.append(nm, tm, btn); list.appendChild(div);
+    });
+}
+
+function addPerson() {
+    const inp = $('new-person-name');
+    const name = inp.value.trim().slice(0, 30);
+    const team = $('new-person-team').value;
+    if (!name) { showToast('กรุณาใส่ชื่อ', 'err'); return; }
+    if (!PEOPLE_TEAMS.includes(team)) return;
+    if (peopleList.some(p => p.name === name && p.team === team)) { showToast('มีรายชื่อนี้แล้ว', 'err'); return; }
+    if (peopleList.length >= PEOPLE_MAX) { showToast(`เพิ่มได้สูงสุด ${PEOPLE_MAX} รายชื่อ`, 'err'); return; }
+    peopleList.push({ name, team });
+    savePeople();
+    inp.value = '';
+    renderPeopleList();
+    showToast('เพิ่มรายชื่อแล้ว');
+}
+
+// เหตุผลที่เกี่ยวกับ "คนอื่น" — ตรงกับที่หน้าสถิติอ่านชื่อจาก detail (ลา / มีคนมาแทน / แทนกะ… / แลกกะ)
+function isPersonReason(r) {
+    return LEAVE_SET.has(r) || r === 'มีคนมาแทน' || r === 'แลกกะ' || r.startsWith('แทนกะ');
+}
+
+function renderPersonSelect() {
+    const sorted = [...peopleList].sort((a, b) => a.team.localeCompare(b.team) || a.name.localeCompare(b.name, 'th'));
+    $('mi-person').innerHTML = '<option value="">— เลือกคน —</option>' +
+        sorted.map(p => { const l = personLabel(p); return `<option value="${eh(l)}">${eh(l)}</option>`; }).join('');
+}
+
+function togglePersonRow() {
+    const show = peopleList.length > 0 && isPersonReason($('mi-reason').value);
+    $('mi-person-row').style.display = show ? 'block' : 'none';
+    $('mi-person').selectedIndex = 0;
+}
+
+function pickPerson() {
+    const v = $('mi-person').value;
+    if (v) $('mi-detail').value = v;
 }
 
 // ===== Backup / Restore =====
